@@ -61,6 +61,44 @@ function donutChart() {
     '<ul class="donut-legend">' + legend + "</ul>";
 }
 
+// Line chart: real GDP growth of the United States, 2015–2025. One line,
+// one country, eleven yearly values from US_GROWTH_2015_2025 (IMF WEO,
+// October 2025, Table A1). The 2025 point is the IMF projection. The
+// negative 2020 value gets its label below the dot so the falling line
+// does not cross the text.
+function growthLineChart() {
+  const data = US_GROWTH_2015_2025;
+  const W = 820, H = 250, padL = 46, padB = 30, padT = 28, padR = 16;
+  const yMin = -3, yMax = 7;
+  const x = (i) => padL + (i / (data.length - 1)) * (W - padL - padR);
+  const y = (v) => H - padB - ((v - yMin) / (yMax - yMin)) * (H - padT - padB);
+  let out = '<svg class="chart" viewBox="0 0 ' + W + " " + H +
+    '" role="img" aria-label="Line chart of real GDP growth of the United States, 2015 to 2025">';
+  for (let g = -2; g <= 6; g += 2) {
+    out += '<line x1="' + padL + '" y1="' + y(g) + '" x2="' + (W - padR) + '" y2="' + y(g) + '" class="grid"/>';
+    out += '<text x="' + (padL - 8) + '" y="' + (y(g) + 4) + '" class="axis" text-anchor="end">' +
+      (g > 0 ? "+" : "") + g + "%</text>";
+  }
+  out += '<line x1="' + padL + '" y1="' + y(0) + '" x2="' + (W - padR) + '" y2="' + y(0) +
+    '" stroke="#94a3b8" stroke-width="1.5"/>';
+  const pts = data.map((d, i) => x(i).toFixed(1) + "," + y(d.value).toFixed(1)).join(" ");
+  out += '<polyline points="' + pts + '" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+  data.forEach((d, i) => {
+    out += '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(d.value).toFixed(1) +
+      '" r="4.5" fill="#fff" stroke="#1d4ed8" stroke-width="2.5"/>';
+    const ly = d.value < 0 ? y(d.value) + 20 : y(d.value) - 10;
+    // First point: anchor the label to the right of the dot so it cannot
+    // collide with the y-axis labels at the left edge.
+    const anchor = i === 0 ? "start" : "middle";
+    const lx = i === 0 ? x(i) + 10 : x(i);
+    out += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) +
+      '" class="dot-label" text-anchor="' + anchor + '">' + (d.value > 0 ? "+" : "") + d.value.toFixed(1) + "%</text>";
+    out += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" class="axis" text-anchor="middle">' +
+      d.year + (d.projected ? "*" : "") + "</text>";
+  });
+  return out + "</svg>";
+}
+
 // Scatter plot: GDP per capita (x) against life expectancy (y). One dot per
 // country, coloured and labelled, so the pattern is readable without a legend.
 function scatterPlot() {

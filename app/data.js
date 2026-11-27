@@ -55,6 +55,20 @@ const COUNTRIES = [
 // modelled ILO estimate); life = life expectancy at birth, years, 2023
 // (WDI SP.DYN.LE00.IN — the latest year published for all 16).
 
+// Real GDP growth of the United States, 2015–2025, annual % change.
+// IMF World Economic Outlook, October 2025, Statistical Appendix Table A1.
+// 2025 is the IMF projection in that vintage (marked with * on the chart);
+// 2024 (+2.8%) is the same figure already used for the United States in
+// COUNTRIES above, so the chart and the rest of the site agree.
+const US_GROWTH_2015_2025 = [
+  { year: 2015, value: 2.9 }, { year: 2016, value: 1.8 },
+  { year: 2017, value: 2.5 }, { year: 2018, value: 3.0 },
+  { year: 2019, value: 2.6 }, { year: 2020, value: -2.1 },
+  { year: 2021, value: 6.2 }, { year: 2022, value: 2.5 },
+  { year: 2023, value: 2.9 }, { year: 2024, value: 2.8 },
+  { year: 2025, value: 2.0, projected: true },
+];
+
 const METRICS = [
   { key: "gdp", label: "GDP", unit: "US$ bn", format: "money", higher: "larger economy",
     blurb: "Nominal GDP, current US dollars, 2024" },

@@ -13,8 +13,9 @@ A static, fully offline site (plain files under `app/`, no build step, no networ
 requests) covering the 16 largest economies by nominal GDP in 2024:
 
 - **Overview** — hero, four global KPIs (each with its source), ranked
-  horizontal bars you can re-sort by any of six measures, and a donut of
-  each economy's share of combined GDP.
+  horizontal bars you can re-sort by any of six measures, a donut of
+  each economy's share of combined GDP, and a line chart of US real GDP
+  growth, 2015–2025 (IMF WEO Oct 2025; 2025 projected).
 - **Rankings** — a sortable 16 × 6 table plus a scatter plot of GDP per capita
   against life expectancy.
 - **Compare** — any two countries head to head, with full profiles and paired

@@ -76,6 +76,11 @@ function renderOverview() {
     "</div>" +
     '<div class="panel charts-row"><div class="bars-col">' + rankedBars(currentMetric) + "</div>" +
     '<div class="donut-col"><h3>Share of combined GDP</h3>' + donutChart() + "</div></div>" +
+    '<div class="panel"><h3>Real GDP growth, United States, 2015–2025</h3>' +
+    growthLineChart() +
+    '<p class="hint">Annual change in real GDP, %. The 2024 value, +2.8%, is the same figure ' +
+    "shown for the United States elsewhere on this site. *2025 is the IMF projection. " +
+    "Source: IMF World Economic Outlook, October 2025, Table A1.</p></div>" +
     "<h2>The five biggest economies at a glance</h2>" +
     '<div class="table-wrap"><table><thead><tr><th>Country</th><th>GDP</th>' +
     "<th>Population</th><th>GDP per capita</th></tr></thead><tbody>" + top5rows +
