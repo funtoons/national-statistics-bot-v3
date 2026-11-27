@@ -12,9 +12,9 @@ The world's 16 largest economies, measured with real figures — an entry for th
 A static, fully offline site (plain files under `app/`, no build step, no network
 requests) covering the 16 largest economies by nominal GDP in 2024:
 
-- **Overview** — hero, four global KPIs, and ranked horizontal bars you can
-  re-sort by any of six measures (GDP, population, GDP per capita, GDP growth,
-  unemployment, life expectancy).
+- **Overview** — hero, four global KPIs (each with its source), ranked
+  horizontal bars you can re-sort by any of six measures, and a donut of
+  each economy's share of combined GDP.
 - **Rankings** — a sortable 16 × 6 table plus a scatter plot of GDP per capita
   against life expectancy.
 - **Compare** — any two countries head to head, with full profiles and paired

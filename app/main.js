@@ -43,13 +43,13 @@ function renderOverview() {
   const metric = metricByKey(currentMetric);
 
   let kpis = '<div class="kpis">' +
-    kpi(gdpTrillions(totalGdp), "Combined GDP", "16 economies, 2024") +
+    kpi(gdpTrillions(totalGdp), "Combined GDP", "16 economies, 2024", "Source: World Bank WDI 2024") +
     kpi(totalPop.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " m",
-      "Combined population", "about 56% of humanity, 2024") +
+      "Combined population", "about 56% of humanity, 2024", "Source: World Bank WDI 2024") +
     kpi("$" + medGdppc.toLocaleString("en-US"), "Median GDP per capita",
-      "middle of the 16, 2024") +
+      "middle of the 16, 2024", "Source: World Bank WDI 2024") +
     kpi(fastest.name + " +" + fastest.growth.toFixed(1) + "%", "Fastest growing",
-      "real GDP growth, 2024") +
+      "real GDP growth, 2024", "Source: IMF WEO Oct 2025") +
     "</div>";
 
   let top5rows = top5.map((c, i) =>
@@ -74,7 +74,8 @@ function renderOverview() {
       '<button data-metric="' + m.key + '"' + (m.key === currentMetric ? ' class="on"' : "") +
       ">" + m.label + "</button>").join("") +
     "</div>" +
-    '<div class="panel">' + rankedBars(currentMetric) + "</div>" +
+    '<div class="panel charts-row"><div class="bars-col">' + rankedBars(currentMetric) + "</div>" +
+    '<div class="donut-col"><h3>Share of combined GDP</h3>' + donutChart() + "</div></div>" +
     "<h2>The five biggest economies at a glance</h2>" +
     '<div class="table-wrap"><table><thead><tr><th>Country</th><th>GDP</th>' +
     "<th>Population</th><th>GDP per capita</th></tr></thead><tbody>" + top5rows +
@@ -100,9 +101,9 @@ function renderOverview() {
   });
 }
 
-function kpi(num, lbl, sub) {
+function kpi(num, lbl, sub, src) {
   return '<div class="kpi"><div class="num">' + num + '</div><div class="lbl">' + lbl +
-    '</div><div class="sub">' + sub + "</div></div>";
+    '</div><div class="sub">' + sub + '</div><div class="src">' + src + "</div></div>";
 }
 
 function finding(title, text) {

@@ -30,6 +30,37 @@ function rankedBars(metricKey) {
   return out + "</svg>";
 }
 
+// Donut chart: share of the combined GDP of all 16 economies, 2024.
+// The five largest economies get their own slice; the other 11 are grouped,
+// so the chart stays readable. Every slice is computed from the GDP figures
+// in data.js — no new data.
+function donutChart() {
+  const total = COUNTRIES.reduce((t, c) => t + c.gdp, 0);
+  const top = COUNTRIES.slice().sort((a, b) => b.gdp - a.gdp).slice(0, 5);
+  const other = total - top.reduce((t, c) => t + c.gdp, 0);
+  const slices = top.map((c) => ({ name: c.name, color: c.color, value: c.gdp }));
+  slices.push({ name: "Other 11 economies", color: "#94a3b8", value: other });
+  const R = 80, C = 2 * Math.PI * R, cx = 110, cy = 110;
+  let offset = 0, rings = "";
+  slices.forEach((s) => {
+    const len = (s.value / total) * C;
+    rings += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="' +
+      s.color + '" stroke-width="34" stroke-dasharray="' + Math.max(0, len - 2).toFixed(1) +
+      " " + C.toFixed(1) + '" stroke-dashoffset="' + (-offset).toFixed(1) +
+      '" transform="rotate(-90 ' + cx + " " + cy + ')"/>';
+    offset += len;
+  });
+  const legend = slices.map((s) =>
+    '<li><span class="dot" style="background:' + s.color + '"></span>' + esc(s.name) +
+    "<b>" + (100 * s.value / total).toFixed(1) + "%</b></li>").join("");
+  return '<svg class="chart donut" viewBox="0 0 220 220" role="img" aria-label="Donut chart of each economy\'s share of combined GDP">' +
+    rings +
+    '<text x="' + cx + '" y="104" class="donut-total" text-anchor="middle">' + gdpTrillions(total) + "</text>" +
+    '<text x="' + cx + '" y="124" class="donut-sub" text-anchor="middle">combined GDP</text>' +
+    '<text x="' + cx + '" y="142" class="donut-sub" text-anchor="middle">16 economies, 2024</text></svg>' +
+    '<ul class="donut-legend">' + legend + "</ul>";
+}
+
 // Scatter plot: GDP per capita (x) against life expectancy (y). One dot per
 // country, coloured and labelled, so the pattern is readable without a legend.
 function scatterPlot() {
